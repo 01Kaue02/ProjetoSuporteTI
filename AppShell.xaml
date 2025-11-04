@@ -7,41 +7,26 @@
     xmlns:auth="clr-namespace:ProjetoSuporteTI.Views.Auth"
     xmlns:chamado="clr-namespace:ProjetoSuporteTI.Views.Chamado"
     xmlns:ai="clr-namespace:ProjetoSuporteTI.Views.Ai"
-    Title="Sistema Suporte TI">
+    Title="Sistema Suporte TI"
+    FlyoutBehavior="Disabled">
 
-    <!-- LOGIN PAGE -->
+    <!-- LOGIN PAGE (SEMPRE VISÍVEL) -->
     <ShellContent
         Title="Login"
         Route="login"
         ContentTemplate="{DataTemplate auth:LoginPage}" />
 
-    <!-- MAIN PAGES (HIDDEN UNTIL LOGIN) -->
-    <TabBar x:Name="MainTabBar" IsVisible="False">
-        <ShellContent
-            Title="Dashboard"
-            Icon="home.png"
-            Route="mainpage"
-            ContentTemplate="{DataTemplate local:MainPage}" />
+    <!-- PÁGINAS PRINCIPAIS (SEMPRE DISPONÍVEIS PARA NAVEGAÇÃO) -->
+    <ShellContent
+        Title="Criar Chamado"
+        Route="createchamado"
+        Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate chamado:CreateChamadoPage}" />
             
-        <ShellContent
-            Title="Criar Chamado"
-            Icon="plus.png"
-            Route="createchamado"
-            ContentTemplate="{DataTemplate chamado:CreateChamadoPage}" />
-            
-        <!-- Removido a pedido: aba de Meus Chamados -->
-            
-        <ShellContent
-            Title="Suporte IA"
-            Icon="robot.png"
-            Route="support"
-            ContentTemplate="{DataTemplate ai:SupportPage}" />
-            
-        <ShellContent
-            Title="Perfil"
-            Icon="user.png"
-            Route="profile"
-            ContentTemplate="{DataTemplate auth:ProfilePage}" />
-    </TabBar>
+    <ShellContent
+        Title="Suporte IA"
+        Route="support"
+        Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate ai:SupportPage}" />
 
 </Shell>

@@ -82,13 +82,13 @@
                             Clicked="OnLoginClicked"
                             Margin="0,15,0,0" />
                     
-                    <!-- LINK CRIAR CONTA -->
-                    <Button Text=" Criar Nova Conta"
+                    <!-- LINK ESQUECI SENHA -->
+                    <Button Text="🔑 Esqueci minha senha"
                             FontSize="14"
                             BackgroundColor="Transparent"
                             TextColor="#58a6ff"
                             BorderColor="Transparent"
-                            Clicked="OnCreateAccountClicked" />
+                            Clicked="OnForgotPasswordClicked" />
                     
                 </StackLayout>
             </Frame>

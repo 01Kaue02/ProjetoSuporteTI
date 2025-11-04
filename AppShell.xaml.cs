@@ -7,7 +7,22 @@ public partial class AppShell : Shell
         try
         {
             InitializeComponent();
-            CheckLoginStatus();
+            
+            // Registrar rotas explicitamente
+            Routing.RegisterRoute("login", typeof(Views.Auth.LoginPage));
+            Routing.RegisterRoute("createchamado", typeof(Views.Chamado.CreateChamadoPage));
+            Routing.RegisterRoute("support", typeof(Views.Ai.SupportPage));
+            
+            System.Diagnostics.Debug.WriteLine("[SHELL] AppShell inicializado com rotas registradas");
+            
+            // Limpar qualquer estado de login anterior
+            Preferences.Set("is_logged_in", false);
+            Preferences.Remove("user_id");
+            Preferences.Remove("user_name");
+            Preferences.Remove("user_email");
+            Preferences.Remove("user_cargo");
+            
+            System.Diagnostics.Debug.WriteLine("[SHELL] Estado de login limpo - sempre iniciar no login");
         }
         catch (Exception ex)
         {
@@ -15,54 +30,16 @@ public partial class AppShell : Shell
         }
     }
 
-    private async void CheckLoginStatus()
-    {
-        try
-        {
-            await Task.Delay(100); // Pequeno delay para estabilizar
-            
-            // Sempre mostrar login primeiro (forçar logout)
-            Preferences.Set("is_logged_in", false);
-            
-            ShowLoginPage();
-            await Shell.Current.GoToAsync("//login");
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Erro ao verificar login: {ex.Message}");
-        }
-    }
-
     public void ShowLoggedInPages()
     {
-        try
-        {
-            MainTabBar.IsVisible = true;
-            
-            var loginContent = Items.FirstOrDefault(item => item.Route == "login");
-            if (loginContent != null)
-                loginContent.IsVisible = false;
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Erro ao mostrar páginas logadas: {ex.Message}");
-        }
+        // Não precisa mais fazer nada - todas as páginas estão sempre disponíveis
+        System.Diagnostics.Debug.WriteLine("[SHELL] Páginas logadas habilitadas (não há mais controle de visibilidade)");
     }
 
-    public void ShowLoginPage()
+    public void HideLoggedInPages()
     {
-        try
-        {
-            MainTabBar.IsVisible = false;
-            
-            var loginContent = Items.FirstOrDefault(item => item.Route == "login");
-            if (loginContent != null)
-                loginContent.IsVisible = true;
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Erro ao mostrar login: {ex.Message}");
-        }
+        // Não precisa mais fazer nada - todas as páginas estão sempre disponíveis  
+        System.Diagnostics.Debug.WriteLine("[SHELL] Páginas logadas desabilitadas (não há mais controle de visibilidade)");
     }
 
     public async Task Logout()
@@ -70,7 +47,6 @@ public partial class AppShell : Shell
         try
         {
             Preferences.Clear();
-            ShowLoginPage();
             await Shell.Current.GoToAsync("//login");
         }
         catch (Exception ex)

@@ -4,15 +4,112 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="Criar Chamado"
              BackgroundColor="#0d1117">
-    <StackLayout Padding="20" Spacing="20">
-        <Label Text=" Criar Novo Chamado"
-               FontSize="24"
-               FontAttributes="Bold"
-               TextColor="#f0f6fc"
-               HorizontalOptions="Center" />
-        <Label Text="Em desenvolvimento..."
-               FontSize="16"
-               TextColor="#8b949e"
-               HorizontalOptions="Center" />
-    </StackLayout>
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="25" VerticalOptions="Center">
+            
+            <!-- TÍTULO -->
+            <Label Text="⚙️ Criar chamado"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#f0f6fc"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20" />
+
+            <!-- FORMULÁRIO -->
+            <Frame BackgroundColor="#161b22" 
+                   BorderColor="#30363d" 
+                   CornerRadius="12" 
+                   Padding="25"
+                   HasShadow="True">
+                
+                <StackLayout Spacing="20">
+                    
+                    <!-- DESCRIÇÃO DO PROBLEMA -->
+                    <StackLayout Spacing="8">
+                        <Label Text="Descrição do problema"
+                               TextColor="#f0f6fc"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Editor x:Name="DescricaoEditor"
+                                Placeholder="Descreva seu problema aqui..."
+                                PlaceholderColor="#6e7681"
+                                TextColor="#f0f6fc"
+                                BackgroundColor="#21262d"
+                                FontSize="16"
+                                HeightRequest="120" />
+                    </StackLayout>
+
+                    <!-- NÍVEL DE PRIORIDADE -->
+                    <StackLayout Spacing="8">
+                        <Label Text="Nível de prioridade"
+                               TextColor="#f0f6fc"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Picker x:Name="PrioridadePicker"
+                                TextColor="#f0f6fc"
+                                BackgroundColor="#21262d"
+                                FontSize="16"
+                                HeightRequest="50">
+                            <Picker.Items>
+                                <x:String>Baixo</x:String>
+                                <x:String>Médio</x:String>
+                                <x:String>Alto</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </StackLayout>
+
+                    <!-- CATEGORIA -->
+                    <StackLayout Spacing="8">
+                        <Label Text="Categoria"
+                               TextColor="#f0f6fc"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Picker x:Name="CategoriaPicker"
+                                TextColor="#f0f6fc"
+                                BackgroundColor="#21262d"
+                                FontSize="16"
+                                HeightRequest="50">
+                            <Picker.Items>
+                                <x:String>Hardware</x:String>
+                                <x:String>Software</x:String>
+                                <x:String>Rede</x:String>
+                                <x:String>Sistema</x:String>
+                                <x:String>Impressora</x:String>
+                                <x:String>Email</x:String>
+                                <x:String>Outro</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </StackLayout>
+
+                    <!-- BOTÃO ENVIAR -->
+                    <Button x:Name="EnviarButton"
+                            Text="🚀 Enviar chamado"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            BackgroundColor="#da3633"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="55"
+                            Clicked="OnEnviarClicked"
+                            Margin="0,15,0,0" />
+
+                    <!-- BOTÃO CANCELAR -->
+                    <Button x:Name="CancelarButton"
+                            Text="❌ Cancelar chamado"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            BackgroundColor="#6e7681"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Clicked="OnCancelarClicked"
+                            Margin="0,10,0,0" />
+                    
+                </StackLayout>
+            </Frame>
+            
+        </StackLayout>
+    </ScrollView>
+
 </ContentPage>
