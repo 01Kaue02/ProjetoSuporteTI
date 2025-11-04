@@ -8,7 +8,7 @@ namespace ProjetoSuporteTI.Services;
 public class ApiService
 {
     private readonly HttpClient _httpClient;
-    private const string BaseUrl = "https://api.suporteti.com"; // SUBSTITUA PELA SUA API
+    private const string BaseUrl = "https://api-chat-n79k.onrender.com"; // SUBSTITUA PELA SUA API
 
     public ApiService()
     {
