@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ProjetoSuporteTI.Views.Chamado.CreateChamadoPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Criar Chamado"
+             BackgroundColor="#0d1117">
+    <StackLayout Padding="20" Spacing="20">
+        <Label Text=" Criar Novo Chamado"
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="#f0f6fc"
+               HorizontalOptions="Center" />
+        <Label Text="Em desenvolvimento..."
+               FontSize="16"
+               TextColor="#8b949e"
+               HorizontalOptions="Center" />
+    </StackLayout>
+</ContentPage>

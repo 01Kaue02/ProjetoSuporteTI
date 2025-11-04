@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "Windows Machine": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "environmentVariables": {
+        "DOTNET_MODIFIABLE_ASSEMBLIES": "debug"
+      }
+    },
+    "Windows MSIX": {
+      "commandName": "MsixPackage",
+      "commandLineArgs": "",
+      "alwaysReinstallApp": false,
+      "generateAppInstallerFile": false,
+      "packageTargetFramework": "net9.0-windows10.0.19041.0"
+    },
+    "Android Local Device": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "environmentVariables": {
+        "DOTNET_MODIFIABLE_ASSEMBLIES": "debug"
+      }
+    }
+  }
+}

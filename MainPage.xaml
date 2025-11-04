@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ProjetoSuporteTI.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Suporte TI App"
+             BackgroundColor="#0d1117">
+
+    <StackLayout Padding="20" Spacing="30" VerticalOptions="Center">
+        
+        <Label Text="✅" FontSize="80" HorizontalOptions="Center" />
+        
+        <Label Text="SUPORTE TI APP"
+               FontSize="32"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center" />
+               
+        <Label Text="Aplicativo funcionando perfeitamente!"
+               FontSize="18"
+               TextColor="LightGray"
+               HorizontalOptions="Center" />
+
+        <Button Text="🔐 IR PARA LOGIN"
+                FontSize="18"
+                BackgroundColor="Green"
+                TextColor="White"
+                CornerRadius="10"
+                HeightRequest="60"
+                WidthRequest="250"
+                Clicked="OnLoginClicked"
+                HorizontalOptions="Center" />
+                
+        <Label Text="🎯 App único e estável"
+               FontSize="14"
+               TextColor="Gray"
+               HorizontalOptions="Center" />
+               
+    </StackLayout>
+
+</ContentPage>

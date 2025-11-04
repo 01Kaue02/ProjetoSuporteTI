@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ProjetoSuporteTI.Views.Auth.LoginPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Login"
+             BackgroundColor="#0d1117">
+
+    <ScrollView>
+        <StackLayout Padding="40" VerticalOptions="Center" Spacing="25">
+            
+            <!-- LOGO/TÍTULO -->
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" Padding="0" Margin="0,0,0,40">
+                <StackLayout>
+                    <Label Text="" 
+                           FontSize="60" 
+                           HorizontalOptions="Center"
+                           TextColor="#58a6ff" />
+                    <Label Text="Sistema de Suporte TI"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="#f0f6fc"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Faça login para continuar"
+                           FontSize="16"
+                           TextColor="#8b949e"
+                           HorizontalOptions="Center"
+                           Margin="0,10,0,0" />
+                </StackLayout>
+            </Frame>
+
+            <!-- FORMULÁRIO DE LOGIN -->
+            <Frame BackgroundColor="#161b22" 
+                   BorderColor="#30363d" 
+                   CornerRadius="12" 
+                   Padding="25"
+                   HasShadow="True">
+                
+                <StackLayout Spacing="20">
+                    
+                    <!-- EMAIL -->
+                    <StackLayout Spacing="8">
+                        <Label Text="📧 Email"
+                               TextColor="#f0f6fc"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Entry x:Name="EmailEntry"
+                               Placeholder="Digite seu email"
+                               PlaceholderColor="#6e7681"
+                               TextColor="#f0f6fc"
+                               BackgroundColor="#21262d"
+                               Keyboard="Email"
+                               FontSize="16"
+                               HeightRequest="50" />
+                    </StackLayout>
+
+                    <!-- SENHA -->
+                    <StackLayout Spacing="8">
+                        <Label Text=" Senha"
+                               TextColor="#f0f6fc"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Entry x:Name="PasswordEntry"
+                               Placeholder="Digite sua senha"
+                               PlaceholderColor="#6e7681"
+                               TextColor="#f0f6fc"
+                               BackgroundColor="#21262d"
+                               IsPassword="True"
+                               FontSize="16"
+                               HeightRequest="50" />
+                    </StackLayout>
+
+                    <!-- BOTÃO LOGIN -->
+                    <Button x:Name="LoginButton"
+                            Text=" Entrar"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            BackgroundColor="#238636"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="55"
+                            Clicked="OnLoginClicked"
+                            Margin="0,15,0,0" />
+                    
+                    <!-- LINK CRIAR CONTA -->
+                    <Button Text=" Criar Nova Conta"
+                            FontSize="14"
+                            BackgroundColor="Transparent"
+                            TextColor="#58a6ff"
+                            BorderColor="Transparent"
+                            Clicked="OnCreateAccountClicked" />
+                    
+                </StackLayout>
+            </Frame>
+            
+            <!-- RODAPÉ -->
+            <Label Text=" Seus dados estão seguros"
+                   FontSize="12"
+                   TextColor="#6e7681"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0" />
+            
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

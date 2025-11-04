@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ProjetoSuporteTI.Views.Ai.SupportPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Suporte IA"
+             BackgroundColor="#0d1117">
+    <StackLayout Padding="20" Spacing="20">
+        <Label Text=" Suporte com IA"
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="#f0f6fc"
+               HorizontalOptions="Center" />
+        <Label Text="Em desenvolvimento..."
+               FontSize="16"
+               TextColor="#8b949e"
+               HorizontalOptions="Center" />
+    </StackLayout>
+</ContentPage>

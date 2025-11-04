@@ -1,0 +1,73 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net9.0-android
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ProjetoSuporteTI
+build_property.ProjectDir = C:\Users\kauel\maui\suporte-ti-app\ProjetoSuporteTI\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/Views/Ai/SupportPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.Views.Ai.SupportPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Ai\SupportPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Ai\SupportPage.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/Views/Auth/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.Views.Auth.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Auth\LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Auth\LoginPage.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/Views/Auth/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.Views.Auth.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Auth\ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Auth\ProfilePage.xaml
+
+[C:/Users/kauel/maui/suporte-ti-app/ProjetoSuporteTI/Views/Chamado/CreateChamadoPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetoSuporteTI.Views.Chamado.CreateChamadoPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Chamado\CreateChamadoPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Chamado\CreateChamadoPage.xaml

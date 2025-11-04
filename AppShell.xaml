@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ProjetoSuporteTI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ProjetoSuporteTI"
+    xmlns:auth="clr-namespace:ProjetoSuporteTI.Views.Auth"
+    xmlns:chamado="clr-namespace:ProjetoSuporteTI.Views.Chamado"
+    xmlns:ai="clr-namespace:ProjetoSuporteTI.Views.Ai"
+    Title="Sistema Suporte TI">
+
+    <!-- LOGIN PAGE -->
+    <ShellContent
+        Title="Login"
+        Route="login"
+        ContentTemplate="{DataTemplate auth:LoginPage}" />
+
+    <!-- MAIN PAGES (HIDDEN UNTIL LOGIN) -->
+    <TabBar x:Name="MainTabBar" IsVisible="False">
+        <ShellContent
+            Title="Dashboard"
+            Icon="home.png"
+            Route="mainpage"
+            ContentTemplate="{DataTemplate local:MainPage}" />
+            
+        <ShellContent
+            Title="Criar Chamado"
+            Icon="plus.png"
+            Route="createchamado"
+            ContentTemplate="{DataTemplate chamado:CreateChamadoPage}" />
+            
+        <!-- Removido a pedido: aba de Meus Chamados -->
+            
+        <ShellContent
+            Title="Suporte IA"
+            Icon="robot.png"
+            Route="support"
+            ContentTemplate="{DataTemplate ai:SupportPage}" />
+            
+        <ShellContent
+            Title="Perfil"
+            Icon="user.png"
+            Route="profile"
+            ContentTemplate="{DataTemplate auth:ProfilePage}" />
+    </TabBar>
+
+</Shell>
