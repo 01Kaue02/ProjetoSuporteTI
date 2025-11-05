@@ -9,7 +9,7 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
-        _apiService = new ApiService();
+        _apiService = ApiService.Instance; // Usar Singleton
     }
 
     protected override void OnAppearing()

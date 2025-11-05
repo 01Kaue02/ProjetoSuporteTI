@@ -59,40 +59,35 @@
                         </Picker>
                     </StackLayout>
 
-                    <!-- CATEGORIA -->
+                    <!-- DISPOSITIVO -->
                     <StackLayout Spacing="8">
-                        <Label Text="Categoria"
+                        <Label Text="Dispositivo"
                                TextColor="#f0f6fc"
                                FontSize="16"
                                FontAttributes="Bold" />
-                        <Picker x:Name="CategoriaPicker"
+                        <Picker x:Name="DispositivoPicker"
                                 TextColor="#f0f6fc"
                                 BackgroundColor="#21262d"
                                 FontSize="16"
                                 HeightRequest="50">
                             <Picker.Items>
-                                <x:String>Hardware</x:String>
-                                <x:String>Software</x:String>
-                                <x:String>Rede</x:String>
-                                <x:String>Sistema</x:String>
+                                <x:String>Teclado</x:String>
+                                <x:String>Mouse</x:String>
+                                <x:String>Monitor</x:String>
                                 <x:String>Impressora</x:String>
-                                <x:String>Email</x:String>
-                                <x:String>Outro</x:String>
+                                <x:String>Outros</x:String>
                             </Picker.Items>
                         </Picker>
                     </StackLayout>
 
                     <!-- BOTÃO ENVIAR -->
-                    <Button x:Name="EnviarButton"
-                            Text="🚀 Enviar chamado"
-                            FontSize="18"
-                            FontAttributes="Bold"
-                            BackgroundColor="#da3633"
-                            TextColor="White"
-                            CornerRadius="8"
-                            HeightRequest="55"
-                            Clicked="OnEnviarClicked"
-                            Margin="0,15,0,0" />
+        <Button x:Name="EnviarButton"
+                Text="Enviar Solicitação"
+                BackgroundColor="#0066cc"
+                TextColor="White"
+                CornerRadius="10"
+                Margin="0,20,0,10"
+                Clicked="OnEnviarClicked" />
 
                     <!-- BOTÃO CANCELAR -->
                     <Button x:Name="CancelarButton"

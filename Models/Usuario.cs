@@ -19,6 +19,14 @@ public class LoginResult
     public string Message { get; set; } = "";
 }
 
+// Resultado da criação de chamado
+public class CreateChamadoResult
+{
+    public bool Success { get; set; }
+    public string Message { get; set; } = "";
+    public int ChamadoId { get; set; }
+}
+
 // Classes para respostas da API
 public class ApiLoginResponse
 {

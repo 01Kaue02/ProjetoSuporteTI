@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xfqX6ZQe7W8=",
+  "dgSpecHash": "DmTK2Wpimzc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kauel\\maui\\suporte-ti-app\\ProjetoSuporteTI\\ProjetoSuporteTI.csproj",
+  "projectFilePath": "C:\\Users\\kauel\\maui\\suporte-ti-app\\projetosuporteti\\ProjetoSuporteTI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kauel\\.nuget\\packages\\googlegson\\2.11.0.3\\googlegson.2.11.0.3.nupkg.sha512",
     "C:\\Users\\kauel\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0\\microsoft.extensions.configuration.9.0.0.nupkg.sha512",
@@ -23,6 +23,10 @@
     "C:\\Users\\kauel\\.nuget\\packages\\microsoft.maui.graphics\\9.0.0\\microsoft.maui.graphics.9.0.0.nupkg.sha512",
     "C:\\Users\\kauel\\.nuget\\packages\\microsoft.maui.resizetizer\\9.0.0\\microsoft.maui.resizetizer.9.0.0.nupkg.sha512",
     "C:\\Users\\kauel\\.nuget\\packages\\microsoft.net.illink.tasks\\9.0.10\\microsoft.net.illink.tasks.9.0.10.nupkg.sha512",
+    "C:\\Users\\kauel\\.nuget\\packages\\openai\\2.6.0\\openai.2.6.0.nupkg.sha512",
+    "C:\\Users\\kauel\\.nuget\\packages\\system.clientmodel\\1.7.0\\system.clientmodel.1.7.0.nupkg.sha512",
+    "C:\\Users\\kauel\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
+    "C:\\Users\\kauel\\.nuget\\packages\\system.net.serversentevents\\9.0.9\\system.net.serversentevents.9.0.9.nupkg.sha512",
     "C:\\Users\\kauel\\.nuget\\packages\\xamarin.android.glide\\4.16.0.6\\xamarin.android.glide.4.16.0.6.nupkg.sha512",
     "C:\\Users\\kauel\\.nuget\\packages\\xamarin.android.glide.annotations\\4.16.0.6\\xamarin.android.glide.annotations.4.16.0.6.nupkg.sha512",
     "C:\\Users\\kauel\\.nuget\\packages\\xamarin.android.glide.disklrucache\\4.16.0.6\\xamarin.android.glide.disklrucache.4.16.0.6.nupkg.sha512",

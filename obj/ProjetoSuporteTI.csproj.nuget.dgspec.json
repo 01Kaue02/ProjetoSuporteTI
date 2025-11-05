@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kauel\\maui\\suporte-ti-app\\ProjetoSuporteTI\\ProjetoSuporteTI.csproj": {}
+    "C:\\Users\\kauel\\maui\\suporte-ti-app\\projetosuporteti\\ProjetoSuporteTI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kauel\\maui\\suporte-ti-app\\ProjetoSuporteTI\\ProjetoSuporteTI.csproj": {
+    "C:\\Users\\kauel\\maui\\suporte-ti-app\\projetosuporteti\\ProjetoSuporteTI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kauel\\maui\\suporte-ti-app\\ProjetoSuporteTI\\ProjetoSuporteTI.csproj",
+        "projectUniqueName": "C:\\Users\\kauel\\maui\\suporte-ti-app\\projetosuporteti\\ProjetoSuporteTI.csproj",
         "projectName": "ProjetoSuporteTI",
-        "projectPath": "C:\\Users\\kauel\\maui\\suporte-ti-app\\ProjetoSuporteTI\\ProjetoSuporteTI.csproj",
+        "projectPath": "C:\\Users\\kauel\\maui\\suporte-ti-app\\projetosuporteti\\ProjetoSuporteTI.csproj",
         "packagesPath": "C:\\Users\\kauel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kauel\\maui\\suporte-ti-app\\ProjetoSuporteTI\\obj\\",
+        "outputPath": "C:\\Users\\kauel\\maui\\suporte-ti-app\\projetosuporteti\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
@@ -63,6 +63,10 @@
               "target": "Package",
               "version": "[9.0.10, )",
               "autoReferenced": true
+            },
+            "OpenAI": {
+              "target": "Package",
+              "version": "[2.6.0, )"
             }
           },
           "imports": [

@@ -11,11 +11,12 @@ public partial class SupportPage : ContentPage
     private string _chamadoDescricao = "";
     private string _chamadoPrioridade = "";
     private string _chamadoCategoria = "";
+    private int _chamadoId = 0; // ID do chamado atual
 
     public SupportPage()
     {
         InitializeComponent();
-        _apiService = new ApiService();
+        _apiService = ApiService.Instance; // Usar Singleton
     }
 
     protected override async void OnAppearing()
@@ -25,7 +26,10 @@ public partial class SupportPage : ContentPage
         // Recuperar dados do chamado
         _chamadoDescricao = Preferences.Get("chamado_descricao", "");
         _chamadoPrioridade = Preferences.Get("chamado_prioridade", "");
-        _chamadoCategoria = Preferences.Get("chamado_categoria", "");
+        _chamadoCategoria = Preferences.Get("chamado_dispositivo", "");
+
+        // Carregar o chamado já criado (não criar outro)
+        CarregarChamadoExistente();
 
         // Simular análise da IA
         await SimularAnaliseIA();
@@ -83,8 +87,8 @@ public partial class SupportPage : ContentPage
             AdicionarMensagemIA("⚠️ Não conseguimos resolver automaticamente.");
             AdicionarMensagemIA("📋 Chamado encaminhado para suporte técnico.");
             
-            // Salvar como chamado oficial
-            await SalvarChamadoOficial();
+            // Chamado já foi criado no CreateChamadoPage, apenas carregar o ID
+            CarregarChamadoExistente();
         }
     }
 
@@ -165,25 +169,25 @@ public partial class SupportPage : ContentPage
         });
     }
 
-    private async Task SalvarChamadoOficial()
+    private void CarregarChamadoExistente()
     {
         try
         {
-            var chamado = new Models.Chamado
+            // Recuperar ID do chamado já criado
+            var chamadoIdStr = Preferences.Get("chamado_id", "0");
+            if (int.TryParse(chamadoIdStr, out int chamadoId) && chamadoId > 0)
             {
-                Titulo = $"{_chamadoCategoria} - {_chamadoPrioridade}",
-                Descricao = _chamadoDescricao,
-                Status = "Em Andamento",
-                Prioridade = _chamadoPrioridade,
-                DataCriacao = DateTime.Now,
-                UsuarioId = int.Parse(Preferences.Get("user_id", "1"))
-            };
-
-            await _apiService.CreateChamadoAsync(chamado);
+                _chamadoId = chamadoId;
+                Console.WriteLine($"✅ Chamado carregado: ID {_chamadoId}");
+            }
+            else
+            {
+                Console.WriteLine("⚠️ ID do chamado não encontrado nas preferências");
+            }
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Erro ao salvar chamado: {ex.Message}");
+            Console.WriteLine($"❌ Erro ao carregar chamado: {ex.Message}");
         }
     }
 
@@ -240,23 +244,110 @@ public partial class SupportPage : ContentPage
         }
     }
 
-    private async void OnFinalizarClicked(object sender, EventArgs e)
+    private async void OnResolvidoIAClicked(object sender, EventArgs e)
     {
-        var result = await DisplayAlert("✅ Finalizar", "Deseja finalizar o atendimento e fazer logout?", "Sim", "Não");
-        
-        if (result)
+        try
         {
-            // Limpar todos os dados
-            Preferences.Clear();
-            
-            await DisplayAlert("✅ Finalizado", "Atendimento finalizado com sucesso! Obrigado por usar nosso sistema.", "OK");
-            
-            // Voltar para login
-            var shell = Shell.Current as AppShell;
-            if (shell != null)
+            if (_chamadoId <= 0)
             {
-                await shell.Logout();
+                await DisplayAlert("❌ Erro", "ID do chamado não encontrado.", "OK");
+                return;
             }
+
+            var confirm = await DisplayAlert("🤖 Resolvido pela IA", 
+                "Confirma que a IA resolveu seu problema?\n\n" +
+                "✅ O chamado será FINALIZADO como resolvido pela IA\n" +
+                "🔄 Você será deslogado agora", 
+                "✅ Sim, resolvido!", "❌ Cancelar");
+
+            if (confirm)
+            {
+                ResolvidoIAButton.IsEnabled = false;
+                ResolvidoIAButton.Text = "🔄 Finalizando...";
+
+                bool success = await _apiService.MarcarComoResolvidoPorIAAsync(_chamadoId);
+
+                if (success)
+                {
+                    await DisplayAlert("✅ Problema Resolvido!", 
+                        "🎉 Chamado finalizado com sucesso!\n\n" +
+                        "✅ Status: Resolvido pela IA\n" +
+                        "🤖 Obrigado por usar nosso sistema inteligente!\n\n" +
+                        "Você será deslogado agora.", 
+                        "OK");
+
+                    // Limpar dados e fazer logout
+                    Preferences.Clear();
+                    
+                    // Voltar para tela de login
+                    var shell = Shell.Current as AppShell;
+                    if (shell != null)
+                    {
+                        await shell.Logout();
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("❌ Erro", 
+                        "Não foi possível finalizar o chamado. Tente novamente.", 
+                        "OK");
+                    
+                    ResolvidoIAButton.IsEnabled = true;
+                    ResolvidoIAButton.Text = "🤖 Resolvido pela IA";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"💥 Erro ao finalizar chamado pela IA: {ex.Message}");
+            await DisplayAlert("❌ Erro", $"Erro inesperado: {ex.Message}", "OK");
+            
+            ResolvidoIAButton.IsEnabled = true;
+            ResolvidoIAButton.Text = "🤖 Resolvido pela IA";
+        }
+    }
+
+    private async void OnPrecisaSuporteClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var confirm = await DisplayAlert("🆘 Encaminhar para Suporte", 
+                "Confirma que precisa do suporte técnico humano?\n\n" +
+                "O chamado permanecerá ABERTO para o suporte resolver.\n" +
+                "Você será deslogado agora.", 
+                "✅ Sim, preciso!", "❌ Cancelar");
+
+            if (confirm)
+            {
+                PrecisaSuporteButton.IsEnabled = false;
+                PrecisaSuporteButton.Text = "🔄 Encaminhando...";
+
+                await DisplayAlert("🎯 Encaminhado para Suporte", 
+                    "📋 Chamado encaminhado para o suporte técnico!\n\n" +
+                    "✅ Status: Aberto (aguardando suporte)\n" +
+                    "🕐 Nossa equipe entrará em contato em breve\n" +
+                    "⏱️ Tempo médio de resposta: 2-4 horas úteis\n\n" +
+                    "Você será deslogado agora.", 
+                    "OK");
+
+                // Limpar dados e fazer logout (sem finalizar o chamado)
+                Preferences.Clear();
+                
+                // Voltar para tela de login
+                var shell = Shell.Current as AppShell;
+                if (shell != null)
+                {
+                    await shell.Logout();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"💥 Erro ao encaminhar para suporte: {ex.Message}");
+            await DisplayAlert("❌ Erro", $"Erro inesperado: {ex.Message}", "OK");
+            
+            PrecisaSuporteButton.IsEnabled = true;
+            PrecisaSuporteButton.Text = "🆘 Suporte vai resolver";
         }
     }
 }

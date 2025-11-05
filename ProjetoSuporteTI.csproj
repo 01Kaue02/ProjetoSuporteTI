@@ -32,5 +32,6 @@
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
+        <PackageReference Include="OpenAI" Version="2.6.0" />
     </ItemGroup>
 </Project>
