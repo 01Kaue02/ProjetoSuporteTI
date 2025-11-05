@@ -50,36 +50,9 @@ public partial class LoginPage : ContentPage
             LoginButton.IsEnabled = false;
             LoginButton.Text = "🔄 Entrando...";
 
-            System.Diagnostics.Debug.WriteLine("Verificando credenciais...");
+            System.Diagnostics.Debug.WriteLine("Chamando API para login...");
 
-            // ✅ LOGIN FIXO PARA DESENVOLVIMENTO
-            if (email.ToLower() == "adm" && password == "123")
-            {
-                System.Diagnostics.Debug.WriteLine("✅ Credenciais corretas! Salvando dados...");
-                
-                // Salvar dados do administrador
-                Preferences.Set("user_id", "1");
-                Preferences.Set("user_name", "Administrador");
-                Preferences.Set("user_email", "adm@suporteti.com");
-                Preferences.Set("user_cargo", "Administrador do Sistema");
-                Preferences.Set("is_logged_in", true);
-
-                System.Diagnostics.Debug.WriteLine("Dados salvos, mostrando mensagem...");
-                await DisplayAlert("✅ Sucesso", "Bem-vindo, Administrador!", "Continuar");
-
-                // Limpar campos
-                EmailEntry.Text = "";
-                PasswordEntry.Text = "";
-
-                System.Diagnostics.Debug.WriteLine("Navegando para tela principal...");
-                // Navegar para tela principal
-                NavigateToMain();
-                return;
-            }
-
-            System.Diagnostics.Debug.WriteLine("Credenciais não conferem, tentando API...");
-
-            // LOGIN VIA API PARA OUTROS USUÁRIOS
+            // LOGIN VIA API (usando o formato que funcionou)
             var loginResult = await _apiService.LoginAsync(email, password);
 
             if (loginResult.Success)
@@ -90,7 +63,7 @@ public partial class LoginPage : ContentPage
                 Preferences.Set("user_id", loginResult.User?.Id.ToString() ?? "");
                 Preferences.Set("user_name", loginResult.User?.Nome ?? "");
                 Preferences.Set("user_email", loginResult.User?.Email ?? "");
-                Preferences.Set("user_cargo", loginResult.User?.Cargo ?? "");
+                Preferences.Set("user_cargo", loginResult.User?.Cargo.ToString() ?? "");
                 Preferences.Set("is_logged_in", true);
 
                 await DisplayAlert("✅ Sucesso", $"Bem-vindo, {loginResult.User?.Nome}!", "Continuar");

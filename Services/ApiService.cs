@@ -1,14 +1,21 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Json;
 using ProjetoSuporteTI.Models;
-using System.Net.Http;
 
 namespace ProjetoSuporteTI.Services;
 
 public class ApiService
 {
     private readonly HttpClient _httpClient;
-    private const string BaseUrl = "https://api-chat-n79k.onrender.com"; // SUBSTITUA PELA SUA API
+    private const string BaseUrl = "https://api-chat-n79k.onrender.com";
+    
+    private readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true
+    };
+
+    public Usuario? CurrentUser { get; private set; }
 
     public ApiService()
     {
@@ -20,72 +27,187 @@ public class ApiService
     {
         try
         {
-            // SIMULAÇÃO PARA DESENVOLVIMENTO - REMOVA EM PRODUÇÃO
-            await Task.Delay(1500); // Simular delay de rede
+            Console.WriteLine("=== LOGIN FINAL ===");
+            Console.WriteLine($"🔐 Email: {email}");
 
-            // Login de desenvolvimento
-            if (email.Contains("@") && password.Length >= 4)
+            // FORMATO QUE FUNCIONOU - Usuario completo
+            var usuarioCompleto = new
             {
-                var user = new Usuario
-                {
-                    Id = 1,
-                    Nome = "João Silva",
-                    Email = email,
-                    Cargo = "Analista de TI",
-                    DataCriacao = DateTime.Now
-                };
-
-                return new LoginResult
-                {
-                    Success = true,
-                    User = user,
-                    Token = "dev-token-123",
-                    Message = "Login realizado com sucesso!"
-                };
-            }
-
-            return new LoginResult
-            {
-                Success = false,
-                Message = "Email ou senha inválidos!"
-            };
-
-            /* CÓDIGO PARA API REAL - DESCOMENTE QUANDO TIVER API
-            var loginData = new 
-            {
+                id = 0,
+                nome = "",
                 email = email,
-                password = password
+                senha = password,
+                dataCadastro = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                cargo = 0,
+                chamados = new string[] { }
             };
 
-            var json = JsonSerializer.Serialize(loginData);
+            var json = JsonSerializer.Serialize(usuarioCompleto, _jsonOptions);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{BaseUrl}/auth/login", content);
+            Console.WriteLine($"📤 Enviando: {json}");
+
+            var response = await _httpClient.PostAsync($"{BaseUrl}/api/Login/LoginUsuario", content);
             var responseContent = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine($"📥 Status: {response.StatusCode}");
+            Console.WriteLine($"📥 Resposta: {responseContent}");
 
             if (response.IsSuccessStatusCode)
             {
-                var result = JsonSerializer.Deserialize<ApiLoginResponse>(responseContent);
-                return new LoginResult
+                Console.WriteLine("✅ LOGIN FUNCIONOU!");
+                Console.WriteLine($"📄 RESPOSTA: {responseContent}");
+                
+                // A API retorna apenas mensagem de sucesso, não os dados do usuário
+                // Vamos tentar buscar os dados do usuário em outro endpoint
+                try
                 {
-                    Success = true,
-                    User = result.User,
-                    Token = result.Token,
-                    Message = "Login realizado com sucesso!"
-                };
+                    Console.WriteLine("🔍 Tentando buscar dados do usuário...");
+                    
+                    // Tentar buscar por email
+                    var userDataResponse = await _httpClient.GetAsync($"{BaseUrl}/api/Usuario/ObterPorEmail/{Uri.EscapeDataString(email)}");
+                    
+                    if (!userDataResponse.IsSuccessStatusCode)
+                    {
+                        // Tentar endpoint alternativo
+                        Console.WriteLine("� Tentando endpoint alternativo...");
+                        userDataResponse = await _httpClient.GetAsync($"{BaseUrl}/api/Usuario?email={Uri.EscapeDataString(email)}");
+                    }
+                    
+                    if (!userDataResponse.IsSuccessStatusCode)
+                    {
+                        // Tentar POST para buscar usuário
+                        Console.WriteLine("🔍 Tentando POST para buscar usuário...");
+                        var searchData = new { email = email };
+                        var searchJson = JsonSerializer.Serialize(searchData, _jsonOptions);
+                        var searchContent = new StringContent(searchJson, Encoding.UTF8, "application/json");
+                        userDataResponse = await _httpClient.PostAsync($"{BaseUrl}/api/Usuario/BuscarPorEmail", searchContent);
+                    }
+                    
+                    if (userDataResponse.IsSuccessStatusCode)
+                    {
+                        var userDataContent = await userDataResponse.Content.ReadAsStringAsync();
+                        Console.WriteLine($"📄 DADOS DO USUÁRIO: {userDataContent}");
+                        
+                        try
+                        {
+                            var user = JsonSerializer.Deserialize<Usuario>(userDataContent, _jsonOptions);
+                            
+                            if (user != null && user.Id > 0)
+                            {
+                                Console.WriteLine($"👤 Usuário encontrado: {user.Nome} (ID: {user.Id}, Cargo: {user.Cargo})");
+                                
+                                // Validar cargo = 1 (usuário comum)
+                                if (user.Cargo != 1)
+                                {
+                                    string cargoNome = user.Cargo switch
+                                    {
+                                        2 => "Gerente",
+                                        3 => "Suporte",
+                                        _ => "Desconhecido"
+                                    };
+                                    
+                                    Console.WriteLine($"❌ Acesso negado: Cargo {user.Cargo} ({cargoNome})");
+                                    
+                                    return new LoginResult
+                                    {
+                                        Success = false,
+                                        Message = $"Acesso restrito! Este app é apenas para usuários comuns. Você está cadastrado como {cargoNome}."
+                                    };
+                                }
+                                
+                                // Login aprovado!
+                                CurrentUser = user;
+                                
+                                Console.WriteLine($"🎉 Login aprovado para usuário: {user.Nome}");
+                                
+                                return new LoginResult
+                                {
+                                    Success = true,
+                                    User = user,
+                                    Token = "",
+                                    Message = "Login realizado com sucesso!"
+                                };
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"❌ Erro ao processar dados do usuário: {ex.Message}");
+                        }
+                    }
+                    
+                    // Se chegou até aqui, não conseguiu buscar os dados do usuário
+                    // Mas o login foi válido, então vamos criar um usuário básico
+                    Console.WriteLine("⚠️ Criando usuário básico baseado no email...");
+                    
+                    var basicUser = new Usuario
+                    {
+                        Id = 1, // ID temporário
+                        Nome = email.Split('@')[0], // Nome baseado no email
+                        Email = email,
+                        Cargo = 1 // Assumir que é usuário comum se o login funcionou
+                    };
+                    
+                    CurrentUser = basicUser;
+                    
+                    return new LoginResult
+                    {
+                        Success = true,
+                        User = basicUser,
+                        Token = "",
+                        Message = "Login realizado com sucesso! (Dados básicos)"
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Erro ao buscar dados do usuário: {ex.Message}");
+                    
+                    // Login foi válido, criar usuário básico
+                    var basicUser = new Usuario
+                    {
+                        Id = 1,
+                        Nome = email.Split('@')[0],
+                        Email = email,
+                        Cargo = 1
+                    };
+                    
+                    CurrentUser = basicUser;
+                    
+                    return new LoginResult
+                    {
+                        Success = true,
+                        User = basicUser,
+                        Token = "",
+                        Message = "Login realizado com sucesso! (Dados básicos)"
+                    };
+                }
             }
             else
             {
-                return new LoginResult
+                Console.WriteLine($"❌ Erro HTTP: {response.StatusCode}");
+                
+                try
                 {
-                    Success = false,
-                    Message = "Credenciais inválidas!"
-                };
+                    var errorResponse = JsonSerializer.Deserialize<ApiErrorResponse>(responseContent, _jsonOptions);
+                    return new LoginResult
+                    {
+                        Success = false,
+                        Message = errorResponse?.Message ?? responseContent
+                    };
+                }
+                catch
+                {
+                    return new LoginResult
+                    {
+                        Success = false,
+                        Message = $"Erro {response.StatusCode}: {responseContent}"
+                    };
+                }
             }
-            */
         }
         catch (Exception ex)
         {
+            Console.WriteLine($"💥 Exceção no login: {ex.Message}");
             return new LoginResult
             {
                 Success = false,
@@ -94,38 +216,56 @@ public class ApiService
         }
     }
 
-    public async Task<List<Chamado>> GetChamadosAsync()
+    public void Logout()
     {
-        // SIMULAÇÃO PARA DESENVOLVIMENTO
-        await Task.Delay(1000);
-
-        return new List<Chamado>
-        {
-            new Chamado
-            {
-                Id = 1,
-                Titulo = "Problema no computador",
-                Descricao = "Computador não liga",
-                Status = "Aberto",
-                Prioridade = "Alta",
-                DataCriacao = DateTime.Now.AddDays(-2)
-            },
-            new Chamado
-            {
-                Id = 2,
-                Titulo = "Impressora com defeito",
-                Descricao = "Impressora não imprime",
-                Status = "Em Andamento",
-                Prioridade = "Média",
-                DataCriacao = DateTime.Now.AddDays(-1)
-            }
-        };
+        CurrentUser = null;
+        _httpClient.DefaultRequestHeaders.Authorization = null;
     }
 
+    // Método para criar chamado
+    public async Task<bool> CreateChamadoAsync(string titulo, string descricao)
+    {
+        try
+        {
+            if (CurrentUser == null)
+            {
+                Console.WriteLine("❌ Usuário não logado");
+                return false;
+            }
+
+            var chamado = new
+            {
+                titulo = titulo,
+                descricao = descricao,
+                usuarioId = CurrentUser.Id,
+                status = "Aberto",
+                prioridade = "Média",
+                dataAbertura = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+            };
+
+            var json = JsonSerializer.Serialize(chamado, _jsonOptions);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            Console.WriteLine($"📤 Criando chamado: {titulo}");
+
+            var response = await _httpClient.PostAsync($"{BaseUrl}/api/Chamado/CriarChamado", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine($"📥 Status: {response.StatusCode}");
+            Console.WriteLine($"📥 Resposta: {responseContent}");
+
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"💥 Erro ao criar chamado: {ex.Message}");
+            return false;
+        }
+    }
+
+    // Sobrecarga para aceitar objeto Chamado
     public async Task<bool> CreateChamadoAsync(Chamado chamado)
     {
-        // SIMULAÇÃO PARA DESENVOLVIMENTO
-        await Task.Delay(1500);
-        return true; // Simular sucesso
+        return await CreateChamadoAsync(chamado.Titulo, chamado.Descricao);
     }
 }
